@@ -1,4 +1,4 @@
-// This file is part of the "media-db" project
+// This file is part of the "TransRustica" project
 // The goal of this project is to create a database of all the media files in a given folder and it's subfolders and to be able to search through them by resolution, bitrate, codec, etc
 // Another goal is to be able to convert all the files in a given folder and it's subfolders to a given format and bitrate
 // The bitrate, or crf, is based on the output of "ab-av1" and "vmaf" and the goal is to have a vmaf score of 95 or higher, or the passed in vmaf value

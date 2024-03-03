@@ -83,9 +83,9 @@ pub struct TranscodeProgress {
 #[derive(Parser, Serialize, Deserialize, Debug, Clone)]
 #[command(author, version, about, long_about = None)]
 #[clap(
-    name = " TransRustica",
+    name = "TransRustica",
     author = "BankaiNoJutsu <lbegert@gmail.com>",
-    about = "Transcoding, Rust, FFMPEG, VMAF, Chunking ",
+    about = "TransRustica - Transcoding, Rust, FFMPEG, VMAF, Chunking",
     long_about = None
 )]
 pub struct Args {
@@ -94,70 +94,58 @@ pub struct Args {
     pub inputpath: String,
 
     /// output video path folder path (\\... or /... or C:\...)
-    /// (default: .)
     #[clap(short = 'o', long, default_value = ".")]
     pub outputpath: String,
 
     /// VMAF target value
-    /// (default: 97)
     #[clap(short = 'v', long, default_value = "97")]
     pub vmaf: i32,
 
     /// Encoder to use
-    /// (default: libx265)
     /// (possible values: libx265, av1, libsvtav1, hevc_nvenc, hevc_qsv, av1_qsv)
     #[clap(short = 'e', long, default_value = "libx265")]
     pub encoder: String,
 
-    // output folder
+    /// Output folder
     #[clap(short = 'o', long, default_value = ".")]
     pub output_folder: String,
 
-    // show output crf search
+    /// show output crf search
     #[clap(long)]
     pub verbose: bool,
 
     /// Which mode to use for processing
-    /// (default: default)
     /// (possible values: default, chunked)
-    // Mode
     #[clap(short = 'm', long, default_value = "default", value_parser = possible_mode_values)]
     pub mode: String,
 
     /// Which vmaf pool method to use
-    /// (default: mean)
     /// (possible values: min, harmonic_mean, mean)
-    // Mode
     #[clap(short = 'p', long, default_value = "mean", value_parser = possible_pool_values)]
     pub vmaf_pool: String,
 
-    // vmaf threads
+    /// VMAF threads
     #[clap(short = 't', long, default_value = "2", value_parser = vmaf_thread_input_validation)]
     pub vmaf_threads: String,
 
     /// Every n frame to subsample in the vmaf calculation
-    /// (default: 1)
     #[clap(short = 'S', long, default_value = "1", value_parser = vmaf_subsample_input_validation)]
     pub vmaf_subsample: String,
 
     /// Pixel format to use
-    /// (default: yuv420p10le)
     #[clap(long, default_value = "yuv420p10le")]
     pub pix_fmt: String,
 
     /// Max CRF value
-    /// (default: 28)
     /// (possible values: 0-51)
     #[clap(long, default_value = "28")]
     pub max_crf: String,
 
     /// Sample every Nth minute
-    /// (default: 3m)
     #[clap(long, default_value = "3m")]
     pub sample_every: String,
 
     /// Params for ab-av1
-    /// (default: limit-sao,bframes=8,psy-rd=1,aq-mode=3)
     #[clap(
         long,
         default_value = "x265-params=limit-sao,bframes=8,psy-rd=1,aq-mode=3"
@@ -165,7 +153,6 @@ pub struct Args {
     pub params_ab_av1: String,
 
     /// Params for x265
-    /// (default: -x265-params limit-sao:bframes=8:psy-rd=1:aq-mode=3)
     #[clap(
         long,
         default_value = "-x265-params limit-sao:bframes=8:psy-rd=1:aq-mode=3"
@@ -173,38 +160,31 @@ pub struct Args {
     pub params_x265: String,
 
     /// Preset for x265
-    /// (default: slow)
     /// (possible values: ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow, placebo)
     #[clap(long, default_value = "slow")]
     pub preset_x265: String,
 
     /// Preset for av1
-    /// (default: 8)
     #[clap(long, default_value = "8")]
     pub preset_av1: String,
 
     /// Preset for hevc_nvenc
-    /// (default: p7)
     #[clap(long, default_value = "p7")]
     pub preset_hevc_nvenc: String,
 
     /// Params for hevc_nvenc
-    /// (default: -rc-lookahead 100 -b_ref_mode each -tune hq)
     #[clap(long, default_value = "-rc-lookahead 100 -b_ref_mode each -tune hq")]
     pub params_hevc_nvenc: String,
 
     /// Preset for hevc_qsv
-    /// (default: veryslow)
     #[clap(long, default_value = "veryslow")]
     pub preset_hevc_qsv: String,
 
     /// Preset for av1_qsv
-    /// (default: veryslow)
     #[clap(long, default_value = "1")]
     pub preset_av1_qsv: String,
 
     /// Params for hevc_qsv
-    /// (default: -init_hw_device qsv=intel,child_device=0 -b_strategy 1 -look_ahead 1 -async_depth 100)
     #[clap(
         long,
         default_value = "-init_hw_device qsv=intel,child_device=0 -b_strategy 1 -look_ahead 1 -async_depth 100"
@@ -212,7 +192,6 @@ pub struct Args {
     pub params_hevc_qsv: String,
 
     /// Params for av1_qsv
-    /// (default: -init_hw_device qsv=intel,child_device=0 -g 256 -b_strategy 1 -look_ahead 1 -async_depth 100)
     #[clap(
         long,
         default_value = "-init_hw_device qsv=intel,child_device=0 -b_strategy 1 -look_ahead 1 -async_depth 100"
@@ -220,33 +199,27 @@ pub struct Args {
     pub params_av1_qsv: String,
 
     /// Preset for libsvtav1
-    /// (default: 5)
     /// (possible values: -2 - 13)
     #[clap(long, default_value = "5")]
     pub preset_libsvtav1: String,
 
     /// Params for libsvtav1
-    /// (default: )
     #[clap(long, default_value = "")]
     pub params_libsvtav1: String,
 
     /// Preset for libaom-av1
-    /// (default: 4)
     #[clap(long, default_value = "4")]
     pub preset_libaom_av1: String,
 
     /// Params for libaom-av1
-    /// (default: )
     #[clap(long, default_value = "")]
     pub params_libaom_av1: String,
 
     /// Scene split minimum seconds
-    /// (default: 2)
     #[clap(short = 's', long, default_value = "2")]
     pub scene_split_min: f32,
 
     /// Task ID
-    /// (default: "")
     #[clap(short = 'd', long, default_value = "")]
     pub task_id: String,
 }
