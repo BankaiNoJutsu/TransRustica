@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TransRustica Media Transcoder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: black;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: black;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }   
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>TransRustica Media Transcoder</h1>
+    <div style="display: flex;">
+        <form onsubmit="event.preventDefault();" style="flex: 1;">
+            <table>
+                <tr>
+                    <td><label for="input_path">Input Path:</label></td>
+                    <td><input type="text" id="input_path" name="input_path" style="width: 100%; max-width: 600px;"></td>
+                </tr>
+                <tr>
+                    <td><label for="encoder">Encoder:</label></td>
+                    <td>
+                        <select id="encoder" style="width: 100%; max-width: 600px;">
+                            <option value="libx265">libx265</option>
+                            <option value="hevc_amf">hevc_amf</option>
+                            <option value="hevc_nvenc">hevc_nvenc</option>
+                            <option value="libsvtav1">libsvtav1</option>
+                            <option value="hevc_qsv">hevc_qsv</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="preset">Preset:</label></td>
+                    <td>
+                        <select id="preset" style="width: 100%; max-width: 600px;">
+                            <option value="ultrafast">ultrafast</option>
+                            <option value="superfast">superfast</option>
+                            <option value="veryfast">veryfast</option>
+                            <option value="faster">faster</option>
+                            <option value="fast">fast</option>
+                            <option value="medium">medium</option>
+                            <option value="slow">slow</option>
+                            <option value="slower">slower</option>
+                            <option value="veryslow">veryslow</option>
+                            <option value="placebo">placebo</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="output_path">Output Path:</label></td>
+                    <td><input type="text" id="output_path" name="output_path" style="width: 100%; max-width: 600px;"></td>
+                </tr>
+                <tr>
+                    <td><label for="vmaf-target">VMAF Target:</label></td>
+                    <td><input type="text" id="vmaf-target" name="vmaf-target" style="width: 100%; max-width: 600px;"></td>
+                </tr>
+                <tr>
+                    <td><label for="vmaf-threads">VMAF Threads:</label></td>
+                    <td><input type="text" id="vmaf-threads" name="vmaf-threads" style="width: 100%; max-width: 600px;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button onclick="startTranscodingWithInput()">Start</button>
+                        <button onclick="addToQueue()">Add to Queue</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <form onsubmit="event.preventDefault();" style="flex: 1;">
+            <table>
+                <tr>
+                    <td><label for="input_path_scan">Input Path:</label></td>
+                    <td><input type="text" id="input_path_scan" name="input_path_scan" style="width: 100%; max-width: 600px;"></td>
+                </tr>
+                <tr>
+                <td><label for="scan_progress">Scan Progress:</label></td>
+                <td><label id="scan_progress">-</label></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button onclick="startScanWithInput()">Start Scan</button></td>
+                </tr>
+            </table>
+        </form>
+        <div style="height: 200px; flex: 1; overflow: auto;">
+            <div id="log"></div>
+        </div>
+    </div>
+    <script src="/dist/script.js" defer></script>
+</body>
+
+</html>

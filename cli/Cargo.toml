@@ -1,0 +1,16 @@
+[package]
+name = "cli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+clap = { version = ">=4.3.22", features = ["derive"] }
+indicatif = ">=0.17.6"
+rocket = { version = ">=0.5.0", features = ["json"] }
+rusqlite = { version = ">=0.31.0", features = ["bundled"] }
+tokio = { version = ">=1.32.0", features = ["full", "macros"] }
+shared = { path = "../shared" }
+
+[[bin]]
+name = "cli"
+path = "main.rs"
